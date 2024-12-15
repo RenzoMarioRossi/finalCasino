@@ -17,10 +17,12 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TragaDiamantes = void 0;
 var Tragamonedas_1 = require("./Tragamonedas");
+var InstruccionesJuego_1 = require("./InstruccionesJuego");
 var TragaDiamantes = /** @class */ (function (_super) {
     __extends(TragaDiamantes, _super);
     function TragaDiamantes() {
-        return _super.call(this, "Tragamonedas Diamantes", 20, "Diamantes") || this;
+        var instrucciones = (0, InstruccionesJuego_1.cargarInstrucciones)()["Tragamonedas Diamantes"];
+        return _super.call(this, "Tragamonedas Diamantes", 20, "Diamantes", instrucciones) || this;
     }
     TragaDiamantes.prototype.jugar = function (montoApuesta) {
         _super.prototype.jugar.call(this, montoApuesta);

@@ -17,20 +17,19 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ruleta = void 0;
 var Juego_1 = require("./Juego");
+var InstruccionesJuego_1 = require("./InstruccionesJuego");
 var Ruleta = /** @class */ (function (_super) {
     __extends(Ruleta, _super);
     function Ruleta() {
-        return _super.call(this, "Ruleta", 50) || this;
+        var instrucciones = (0, InstruccionesJuego_1.cargarInstrucciones)()["Ruleta"];
+        return _super.call(this, "Ruleta", 50, instrucciones) || this; // Pasa las instrucciones al constructor base
     }
     Ruleta.prototype.jugar = function (montoApuesta) {
-        if (montoApuesta < this.valorMinimoApuesta) {
+        if (montoApuesta < this.getValorMinimoApuesta()) {
             console.log("La apuesta es menor al valor mínimo permitido.");
             return;
         }
         console.log("Jugando a la Ruleta. Apuesta: $".concat(montoApuesta));
-    };
-    Ruleta.prototype.leerInstrucciones = function () {
-        return "Instrucciones de la Ruleta: Apuesta m\u00EDnima $".concat(this.valorMinimoApuesta, ".");
     };
     return Ruleta;
 }(Juego_1.Juego));

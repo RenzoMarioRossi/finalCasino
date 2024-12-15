@@ -19,20 +19,17 @@ exports.Tragamonedas = void 0;
 var Juego_1 = require("./Juego");
 var Tragamonedas = /** @class */ (function (_super) {
     __extends(Tragamonedas, _super);
-    function Tragamonedas(nombre, valorMinimoApuesta, tematica) {
-        var _this = _super.call(this, nombre, valorMinimoApuesta) || this;
+    function Tragamonedas(nombre, valorMinimoApuesta, tematica, instrucciones) {
+        var _this = _super.call(this, nombre, valorMinimoApuesta, instrucciones) || this;
         _this.tematica = tematica;
         return _this;
     }
     Tragamonedas.prototype.jugar = function (montoApuesta) {
-        if (montoApuesta < this.valorMinimoApuesta) {
+        if (montoApuesta < this.getValorMinimoApuesta()) {
             console.log("La apuesta es menor al valor mínimo permitido.");
             return;
         }
-        console.log("Jugando en ".concat(this.nombre, " con tem\u00E1tica ").concat(this.tematica, ". Apuesta: $").concat(montoApuesta));
-    };
-    Tragamonedas.prototype.leerInstrucciones = function () {
-        return "Instrucciones de ".concat(this.nombre, ": Apuesta m\u00EDnima $").concat(this.valorMinimoApuesta, ".");
+        console.log("Jugando en ".concat(this.getNombre(), " con tem\u00E1tica ").concat(this.tematica, ". Apuesta: $").concat(montoApuesta));
     };
     return Tragamonedas;
 }(Juego_1.Juego));

@@ -17,20 +17,19 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlackJack = void 0;
 var Juego_1 = require("./Juego");
+var InstruccionesJuego_1 = require("./InstruccionesJuego");
 var BlackJack = /** @class */ (function (_super) {
     __extends(BlackJack, _super);
     function BlackJack() {
-        return _super.call(this, "BlackJack", 100) || this;
+        var instrucciones = (0, InstruccionesJuego_1.cargarInstrucciones)()["BlackJack"];
+        return _super.call(this, "BlackJack", 100, instrucciones) || this;
     }
     BlackJack.prototype.jugar = function (montoApuesta) {
-        if (montoApuesta < this.valorMinimoApuesta) {
+        if (montoApuesta < this.getValorMinimoApuesta()) {
             console.log("La apuesta es menor al valor mínimo permitido.");
             return;
         }
         console.log("Jugando a BlackJack. Apuesta: $".concat(montoApuesta));
-    };
-    BlackJack.prototype.leerInstrucciones = function () {
-        return "Instrucciones de BlackJack: Apuesta m\u00EDnima $".concat(this.valorMinimoApuesta, ".");
     };
     return BlackJack;
 }(Juego_1.Juego));
