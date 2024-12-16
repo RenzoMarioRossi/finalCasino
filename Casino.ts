@@ -28,6 +28,7 @@ export class Casino {
         const juego = this.juegosDisponibles.find(j => j.getNombre().toLowerCase() === nombreJuego.toLowerCase());
         if (juego) {
             juego.jugar(montoApuesta);
+            console.log(juego)
         } else {
             console.log("El juego seleccionado no está disponible en el casino.");
         }

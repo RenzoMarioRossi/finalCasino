@@ -24,6 +24,7 @@ var Casino = /** @class */ (function () {
         var juego = this.juegosDisponibles.find(function (j) { return j.getNombre().toLowerCase() === nombreJuego.toLowerCase(); });
         if (juego) {
             juego.jugar(montoApuesta);
+            console.log(juego);
         }
         else {
             console.log("El juego seleccionado no está disponible en el casino.");

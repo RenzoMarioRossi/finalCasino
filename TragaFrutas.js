@@ -24,9 +24,31 @@ var TragaFrutas = /** @class */ (function (_super) {
         var instrucciones = (0, InstruccionesJuego_1.cargarInstrucciones)()["Tragamonedas Frutas"];
         return _super.call(this, "Tragamonedas Frutas", 10, "Frutas", instrucciones) || this;
     }
+    TragaFrutas.prototype.girar = function () {
+        var simbolos = ["fruta", "campana", "estrella", "diamante", "limon", "7"];
+        var resultado = [
+            simbolos[Math.floor(Math.random() * simbolos.length)],
+            simbolos[Math.floor(Math.random() * simbolos.length)],
+            simbolos[Math.floor(Math.random() * simbolos.length)],
+        ];
+        return resultado;
+    };
     TragaFrutas.prototype.jugar = function (montoApuesta) {
-        _super.prototype.jugar.call(this, montoApuesta);
         console.log("¡Las frutas giran! Buena suerte.");
+        // Simular los giros del tragamonedas
+        var resultado = this.girar();
+        console.log("Resultados: ".concat(resultado.join(" | ")));
+        // Comprobar si el jugador gana
+        if (this.esGanador(resultado)) {
+            console.log("¡Felicidades! Todos los símbolos coinciden. Has ganado.");
+            console.log("Ganaste $".concat(montoApuesta * 2, " !"));
+        }
+        else {
+            console.log("Lo sentimos, no ganaste esta vez. ¡Sigue intentando!");
+        }
+    };
+    TragaFrutas.prototype.esGanador = function (resultado) {
+        return resultado.every(function (simbolo) { return simbolo === resultado[0]; });
     };
     return TragaFrutas;
 }(Tragamonedas_1.Tragamonedas));
