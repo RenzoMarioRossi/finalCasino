@@ -1,4 +1,4 @@
-linea texto de prueba de las Instrucciones linea 1,
-linea esta es la linea 2,
-linea esta la linea 3,
-linea y esta la linea 4,
+BlackJack: Apuesta mínima $100. El objetivo es llegar lo más cerca posible a 21 sin pasarse.
+Ruleta: Apuesta mínima $50. Elige un número o color y cruza los dedos.
+Tragamonedas Frutas: Apuesta mínima $10. Haz girar las frutas y gana.
+Tragamonedas Diamantes: Apuesta mínima $20. Brilla con los diamantes y gana.
