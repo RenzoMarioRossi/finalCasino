@@ -39,9 +39,17 @@ var TragaFrutas = /** @class */ (function (_super) {
         var resultado = this.girar();
         console.log("Resultados: ".concat(resultado.join(" | ")));
         // Comprobar si el jugador gana
-        if (this.esGanador(resultado)) {
+        if ((resultado[0] == "fruta") && (resultado[1] == "fruta") && (resultado[2] == "fruta")) {
+            console.log("Eres acreedor de una fruteria. Las frutas coinciden, FELICIDADES!!");
+            console.log("Ganaste $".concat(montoApuesta * 5, " !"));
+        }
+        else if (this.esGanador(resultado)) {
             console.log("¡Felicidades! Todos los símbolos coinciden. Has ganado.");
             console.log("Ganaste $".concat(montoApuesta * 2, " !"));
+        }
+        else if ((resultado[0] === resultado[1]) || (resultado[1] === resultado[2]) || (resultado[0] === resultado[2])) {
+            console.log("Dos simbolos coinciden, has salvado la apuesta!");
+            console.log("Ganaste $".concat(montoApuesta, " !"));
         }
         else {
             console.log("Lo sentimos, no ganaste esta vez. ¡Sigue intentando!");

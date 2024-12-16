@@ -14,7 +14,7 @@ const rl = readline.createInterface({
 const casino = new Casino();
 casino.agregarJuego(new TragaFrutas());
 casino.agregarJuego(new TragaDiamantes());
-casino.agregarJuego(new Ruleta());
+casino.agregarJuego(new Ruleta(rl));
 casino.agregarJuego(new BlackJack());
 
 // Mostrar el menú principal

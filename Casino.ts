@@ -6,7 +6,7 @@ import { TragaFrutas } from "./TragaFrutas";
 import { InstruccionesJuego } from "./InstruccionesJuego";
 import * as fs from 'fs';
 
-import * as rls from 'readline';
+import * as rl from 'readline';
 
 
 export class Casino {
@@ -47,7 +47,7 @@ export class Casino {
 const casino = new Casino();
 casino.agregarJuego(new TragaFrutas());
 casino.agregarJuego(new TragaDiamantes());
-casino.agregarJuego(new Ruleta());
+casino.agregarJuego(new Ruleta(rl));
 casino.agregarJuego(new BlackJack());
 
 // Mostrar juegos disponibles con sus instrucciones
