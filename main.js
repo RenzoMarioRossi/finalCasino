@@ -10,12 +10,6 @@ var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
 });
-// Crear el casino y pasar la instancia de readline
-var casino = new Casino_1.Casino(rl); // Apsar readline a Casino
-casino.agregarJuego(new TragaFrutas_1.TragaFrutas());
-casino.agregarJuego(new TragaDiamantes_1.TragaDiamantes());
-casino.agregarJuego(new Ruleta_1.Ruleta(rl)); // Pasar readline a Ruleta
-casino.agregarJuego(new BlackJack_1.BlackJack(rl)); //pasar readline a BlackJack
 // Mostrar el menú principal
 var mostrarMenu = function () {
     console.log("\nBienvenido al Casino!");
@@ -74,5 +68,11 @@ var seleccionarJuegoYRealizarApuesta = function () {
         }
     });
 };
+// Crear el casino y pasar la instancia de readline
+var casino = new Casino_1.Casino(rl); // Apsar readline a Casino
+casino.agregarJuego(new TragaFrutas_1.TragaFrutas());
+casino.agregarJuego(new TragaDiamantes_1.TragaDiamantes());
+casino.agregarJuego(new Ruleta_1.Ruleta(rl, mostrarMenu)); // Pasar readline a Ruleta
+casino.agregarJuego(new BlackJack_1.BlackJack(rl)); //pasar readline a BlackJack
 // Iniciar el menú
 mostrarMenu();

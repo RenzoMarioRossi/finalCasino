@@ -4,11 +4,13 @@ import * as readline from 'readline';
 
 export class Ruleta extends Juego {
     private rl: readline.Interface;
+    private mostrarMenuCallback: Function; // Variable para almacenar la función mostrarMenu
 
-    constructor(rl: readline.Interface) {
+    constructor(rl: readline.Interface, mostrarMenu: Function) {
         const instrucciones = cargarInstrucciones()["Ruleta"];
-        super("Ruleta", 50, instrucciones); 
+        super("Ruleta", 50, instrucciones);
         this.rl = rl;
+        this.mostrarMenuCallback = mostrarMenu; // Asignamos la función mostrarMenu
     }
 
     jugar(montoApuesta: number): void {
@@ -27,7 +29,7 @@ export class Ruleta extends Juego {
                     const numeroApuesta = parseInt(numero, 10);
                     if (isNaN(numeroApuesta) || numeroApuesta < 0 || numeroApuesta > 36) {
                         console.log("Número inválido. Por favor, elige un número entre 0 y 36.");
-                        //this.solicitarContinuar();
+                        this.solicitarContinuar();
                         return;
                     }
                     this.ejecutarRuleta({ tipo: "numero", valor: numeroApuesta }, montoApuesta);
@@ -36,14 +38,14 @@ export class Ruleta extends Juego {
                 this.rl.question("Elige un color (rojo/negro): ", (color) => {
                     if (color.toLowerCase() !== "rojo" && color.toLowerCase() !== "negro") {
                         console.log("Color inválido. Por favor, elige entre 'rojo' o 'negro'.");
-                        //this.solicitarContinuar();
+                        this.solicitarContinuar();
                         return;
                     }
                     this.ejecutarRuleta({ tipo: "color", valor: color.toLowerCase() }, montoApuesta);
                 });
             } else {
                 console.log("Opción inválida. Por favor, elige 'n' para número o 'c' para color.");
-                //this.solicitarContinuar();
+                this.solicitarContinuar();
             }
         });
     }
@@ -61,29 +63,29 @@ export class Ruleta extends Juego {
         // Determinar el ganador
         if (resultado === 0) {
             console.log("El número es 0. ¡El casino gana!");
+            this.solicitarContinuar()
         } else if (apuesta.tipo === "numero" && apuesta.valor === resultado) {
             console.log("¡Felicidades! Tu número coincide. Ganaste.");
             console.log(`Ganaste $${montoApuesta * 10}!`);
-            this.rl.close
+            this.solicitarContinuar()
         } else if (apuesta.tipo === "color" && apuesta.valor === color) {
             console.log("¡Felicidades! Tu color coincide. Ganaste.");
             console.log(`Ganaste $${montoApuesta * 2}!`);
-            this.rl.close
+            this.solicitarContinuar()
         } else {
             console.log("Lo sentimos, no ganaste esta vez. ¡Sigue intentando!");
-            this.rl.close
+            this.solicitarContinuar()
         }
 
-        //this.solicitarContinuar
+        this.solicitarContinuar()
     }
 
-    /*
     private solicitarContinuar(): void {
         // para ver si quiere seguir jugando
         this.rl.question("\n¿Quieres seguir jugando? (s para sí, n para no): ", (respuesta) => {
             if (respuesta.toLowerCase() === "s") {
                 console.log("\nSelecciona otro juego o realiza otra apuesta.");
-                
+                this.mostrarMenuCallback(); // Llamamos a mostrarMenu para regresar al menú principal
             } else if (respuesta.toLowerCase() === "n") {
                 console.log("Gracias por jugar. ¡Hasta pronto!");
                 this.rl.close(); // Cerrar si el jugador decide salir
@@ -93,7 +95,6 @@ export class Ruleta extends Juego {
             }
         });
     }
-*/
 
     // Método para determinar el color basado en el número
     private determinarColor(numero: number): string {

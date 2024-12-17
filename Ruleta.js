@@ -20,11 +20,12 @@ var Juego_1 = require("./Juego");
 var InstruccionesJuego_1 = require("./InstruccionesJuego");
 var Ruleta = /** @class */ (function (_super) {
     __extends(Ruleta, _super);
-    function Ruleta(rl) {
+    function Ruleta(rl, mostrarMenu) {
         var _this = this;
         var instrucciones = (0, InstruccionesJuego_1.cargarInstrucciones)()["Ruleta"];
         _this = _super.call(this, "Ruleta", 50, instrucciones) || this;
         _this.rl = rl;
+        _this.mostrarMenuCallback = mostrarMenu; // Asignamos la función mostrarMenu
         return _this;
     }
     Ruleta.prototype.jugar = function (montoApuesta) {
@@ -42,7 +43,7 @@ var Ruleta = /** @class */ (function (_super) {
                     var numeroApuesta = parseInt(numero, 10);
                     if (isNaN(numeroApuesta) || numeroApuesta < 0 || numeroApuesta > 36) {
                         console.log("Número inválido. Por favor, elige un número entre 0 y 36.");
-                        //this.solicitarContinuar();
+                        _this.solicitarContinuar();
                         return;
                     }
                     _this.ejecutarRuleta({ tipo: "numero", valor: numeroApuesta }, montoApuesta);
@@ -52,7 +53,7 @@ var Ruleta = /** @class */ (function (_super) {
                 _this.rl.question("Elige un color (rojo/negro): ", function (color) {
                     if (color.toLowerCase() !== "rojo" && color.toLowerCase() !== "negro") {
                         console.log("Color inválido. Por favor, elige entre 'rojo' o 'negro'.");
-                        //this.solicitarContinuar();
+                        _this.solicitarContinuar();
                         return;
                     }
                     _this.ejecutarRuleta({ tipo: "color", valor: color.toLowerCase() }, montoApuesta);
@@ -60,7 +61,7 @@ var Ruleta = /** @class */ (function (_super) {
             }
             else {
                 console.log("Opción inválida. Por favor, elige 'n' para número o 'c' para color.");
-                //this.solicitarContinuar();
+                _this.solicitarContinuar();
             }
         });
     };
@@ -74,40 +75,42 @@ var Ruleta = /** @class */ (function (_super) {
         // Determinar el ganador
         if (resultado === 0) {
             console.log("El número es 0. ¡El casino gana!");
+            this.solicitarContinuar();
         }
         else if (apuesta.tipo === "numero" && apuesta.valor === resultado) {
             console.log("¡Felicidades! Tu número coincide. Ganaste.");
             console.log("Ganaste $".concat(montoApuesta * 10, "!"));
-            this.rl.close;
+            this.solicitarContinuar();
         }
         else if (apuesta.tipo === "color" && apuesta.valor === color) {
             console.log("¡Felicidades! Tu color coincide. Ganaste.");
             console.log("Ganaste $".concat(montoApuesta * 2, "!"));
-            this.rl.close;
+            this.solicitarContinuar();
         }
         else {
             console.log("Lo sentimos, no ganaste esta vez. ¡Sigue intentando!");
-            this.rl.close;
+            this.solicitarContinuar();
         }
-        //this.solicitarContinuar
+        this.solicitarContinuar();
     };
-    /*
-    private solicitarContinuar(): void {
+    Ruleta.prototype.solicitarContinuar = function () {
+        var _this = this;
         // para ver si quiere seguir jugando
-        this.rl.question("\n¿Quieres seguir jugando? (s para sí, n para no): ", (respuesta) => {
+        this.rl.question("\n¿Quieres seguir jugando? (s para sí, n para no): ", function (respuesta) {
             if (respuesta.toLowerCase() === "s") {
                 console.log("\nSelecciona otro juego o realiza otra apuesta.");
-                
-            } else if (respuesta.toLowerCase() === "n") {
+                _this.mostrarMenuCallback(); // Llamamos a mostrarMenu para regresar al menú principal
+            }
+            else if (respuesta.toLowerCase() === "n") {
                 console.log("Gracias por jugar. ¡Hasta pronto!");
-                this.rl.close(); // Cerrar si el jugador decide salir
-            } else {
+                _this.rl.close(); // Cerrar si el jugador decide salir
+            }
+            else {
                 console.log("Opción inválida. Por favor, responde 's' para sí o 'n' para no.");
-                this.solicitarContinuar();
+                _this.solicitarContinuar();
             }
         });
-    }
-*/
+    };
     // Método para determinar el color basado en el número
     Ruleta.prototype.determinarColor = function (numero) {
         // Definir los números rojos y negros

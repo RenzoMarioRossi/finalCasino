@@ -10,12 +10,7 @@ const rl = readline.createInterface({
     output: process.stdout,
 });
 
-// Crear el casino y pasar la instancia de readline
-const casino = new Casino(rl); // Apsar readline a Casino
-casino.agregarJuego(new TragaFrutas());
-casino.agregarJuego(new TragaDiamantes());
-casino.agregarJuego(new Ruleta(rl)); // Pasar readline a Ruleta
-casino.agregarJuego(new BlackJack(rl)); //pasar readline a BlackJack
+
 
 // Mostrar el menú principal
 const mostrarMenu = () => {
@@ -74,6 +69,12 @@ const seleccionarJuegoYRealizarApuesta = () => {
     });
 };
 
+// Crear el casino y pasar la instancia de readline
+const casino = new Casino(rl); // Apsar readline a Casino
+casino.agregarJuego(new TragaFrutas());
+casino.agregarJuego(new TragaDiamantes());
+casino.agregarJuego(new Ruleta(rl, mostrarMenu)); // Pasar readline a Ruleta
+casino.agregarJuego(new BlackJack(rl)); //pasar readline a BlackJack
 
 // Iniciar el menú
 mostrarMenu();
