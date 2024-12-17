@@ -1,14 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Casino = void 0;
-var BlackJack_1 = require("./BlackJack");
-var Ruleta_1 = require("./Ruleta");
-var TragaDiamantes_1 = require("./TragaDiamantes");
-var TragaFrutas_1 = require("./TragaFrutas");
 var fs = require("fs");
 var Casino = /** @class */ (function () {
-    function Casino() {
+    function Casino(rl) {
         this.juegosDisponibles = [];
+        this.rl = rl;
     }
     Casino.prototype.agregarJuego = function (juego) {
         this.juegosDisponibles.push(juego);
@@ -24,7 +21,6 @@ var Casino = /** @class */ (function () {
         var juego = this.juegosDisponibles.find(function (j) { return j.getNombre().toLowerCase() === nombreJuego.toLowerCase(); });
         if (juego) {
             juego.jugar(montoApuesta);
-            console.log(juego);
         }
         else {
             console.log("El juego seleccionado no está disponible en el casino.");
@@ -42,12 +38,3 @@ var Casino = /** @class */ (function () {
     return Casino;
 }());
 exports.Casino = Casino;
-var casino = new Casino();
-casino.agregarJuego(new TragaFrutas_1.TragaFrutas());
-casino.agregarJuego(new TragaDiamantes_1.TragaDiamantes());
-casino.agregarJuego(new Ruleta_1.Ruleta());
-casino.agregarJuego(new BlackJack_1.BlackJack());
-// Mostrar juegos disponibles con sus instrucciones
-casino.mostrarJuegosDisponibles();
-// Ejemplo de juego
-casino.seleccionarYJugar("BlackJack", 150);

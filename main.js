@@ -8,14 +8,14 @@ var Ruleta_1 = require("./Ruleta");
 var BlackJack_1 = require("./BlackJack");
 var rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
 });
-// Crear el casino y agregar juegos
-var casino = new Casino_1.Casino();
+// Crear el casino y pasar la instancia de readline
+var casino = new Casino_1.Casino(rl);
 casino.agregarJuego(new TragaFrutas_1.TragaFrutas());
 casino.agregarJuego(new TragaDiamantes_1.TragaDiamantes());
-casino.agregarJuego(new Ruleta_1.Ruleta());
-casino.agregarJuego(new BlackJack_1.BlackJack());
+casino.agregarJuego(new Ruleta_1.Ruleta(rl)); // Pasar readline a Ruleta
+casino.agregarJuego(new BlackJack_1.BlackJack(rl));
 // Mostrar el menú principal
 var mostrarMenu = function () {
     console.log("\nBienvenido al Casino!");

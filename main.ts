@@ -1,21 +1,21 @@
-import * as readline from 'readline';
-import { Casino } from './Casino';
-import { TragaFrutas } from './TragaFrutas';
-import { TragaDiamantes } from './TragaDiamantes';
-import { Ruleta } from './Ruleta';
-import { BlackJack } from './BlackJack';
+import * as readline from "readline";
+import { Casino } from "./Casino";
+import { TragaFrutas } from "./TragaFrutas";
+import { TragaDiamantes } from "./TragaDiamantes";
+import { Ruleta } from "./Ruleta";
+import { BlackJack } from "./BlackJack";
 
 const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
 });
 
-// Crear el casino y agregar juegos
-const casino = new Casino();
+// Crear el casino y pasar la instancia de readline
+const casino = new Casino(rl);
 casino.agregarJuego(new TragaFrutas());
 casino.agregarJuego(new TragaDiamantes());
-casino.agregarJuego(new Ruleta(rl));
-casino.agregarJuego(new BlackJack());
+casino.agregarJuego(new Ruleta(rl)); // Pasar readline a Ruleta
+casino.agregarJuego(new BlackJack(rl));
 
 // Mostrar el menú principal
 const mostrarMenu = () => {
@@ -27,7 +27,7 @@ const mostrarMenu = () => {
         switch (opcion) {
             case "1":
                 casino.mostrarJuegosDisponibles();
-                mostrarMenu();  // Volver al menú principal
+                mostrarMenu(); // Volver al menú principal
                 break;
             case "2":
                 seleccionarJuegoYRealizarApuesta();
@@ -54,7 +54,7 @@ const seleccionarJuegoYRealizarApuesta = () => {
                 seleccionarJuegoYRealizarApuesta();
             } else {
                 casino.seleccionarYJugar(nombreJuego, montoApuesta);
-                mostrarMenu();  // Volver al menú principal
+                mostrarMenu(); // Volver al menú principal
             }
         });
     });

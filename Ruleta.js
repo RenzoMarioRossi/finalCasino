@@ -18,16 +18,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ruleta = void 0;
 var Juego_1 = require("./Juego");
 var InstruccionesJuego_1 = require("./InstruccionesJuego");
-var readline = require("readline");
-var rlRul = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
 var Ruleta = /** @class */ (function (_super) {
     __extends(Ruleta, _super);
-    function Ruleta() {
+    function Ruleta(rl) {
+        var _this = this;
         var instrucciones = (0, InstruccionesJuego_1.cargarInstrucciones)()["Ruleta"];
-        return _super.call(this, "Ruleta", 50, instrucciones) || this;
+        _this = _super.call(this, "Ruleta", 50, instrucciones) || this;
+        _this.rl = rl;
+        return _this;
     }
     Ruleta.prototype.jugar = function (montoApuesta) {
         var _this = this;
@@ -38,33 +36,33 @@ var Ruleta = /** @class */ (function (_super) {
         console.log("Jugando a la Ruleta. Apuesta: $".concat(montoApuesta));
         console.log("Bienvenido a la Ruleta. Puedes apostar por un número (0-36) o por un color (rojo/negro).");
         // Preguntar al usuario por el tipo de apuesta
-        rlRul.question("¿Quieres apostar por un número (n) o un color (c)? ", function (tipo) {
+        this.rl.question("¿Quieres apostar por un número (n) o un color (c)? ", function (tipo) {
             if (tipo.toLowerCase() === "n") {
-                rlRul.question("Ingresa un número entre 0 y 36: ", function (numero) {
+                _this.rl.question("Ingresa un número entre 0 y 36: ", function (numero) {
                     var numeroApuesta = parseInt(numero, 10);
                     if (isNaN(numeroApuesta) || numeroApuesta < 0 || numeroApuesta > 36) {
                         console.log("Número inválido. Por favor, elige un número entre 0 y 36.");
-                        rlRul.close();
+                        _this.rl.close();
                         return;
                     }
                     _this.ejecutarRuleta({ tipo: "numero", valor: numeroApuesta }, montoApuesta);
-                    rlRul.close();
+                    _this.rl.close();
                 });
             }
             else if (tipo.toLowerCase() === "c") {
-                rlRul.question("Elige un color (rojo/negro): ", function (color) {
+                _this.rl.question("Elige un color (rojo/negro): ", function (color) {
                     if (color.toLowerCase() !== "rojo" && color.toLowerCase() !== "negro") {
                         console.log("Color inválido. Por favor, elige entre 'rojo' o 'negro'.");
-                        rlRul.close();
+                        _this.rl.close();
                         return;
                     }
                     _this.ejecutarRuleta({ tipo: "color", valor: color.toLowerCase() }, montoApuesta);
-                    rlRul.close();
+                    _this.rl.close();
                 });
             }
             else {
                 console.log("Opción inválida. Por favor, elige 'n' para número o 'c' para color.");
-                rlRul.close();
+                _this.rl.close();
             }
         });
     };
