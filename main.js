@@ -11,7 +11,7 @@ var rl = readline.createInterface({
     output: process.stdout,
 });
 // Crear el casino y pasar la instancia de readline
-var casino = new Casino_1.Casino(rl);
+var casino = new Casino_1.Casino(rl); // Apsar readline a Casino
 casino.agregarJuego(new TragaFrutas_1.TragaFrutas());
 casino.agregarJuego(new TragaDiamantes_1.TragaDiamantes());
 casino.agregarJuego(new Ruleta_1.Ruleta(rl)); // Pasar readline a Ruleta
@@ -42,20 +42,36 @@ var mostrarMenu = function () {
         }
     });
 };
-// Función para seleccionar juego y realizar apuesta
+// Función para seleccionar juego (por indice enumerado) y realizar apuesta
 var seleccionarJuegoYRealizarApuesta = function () {
-    rl.question("Ingrese el nombre del juego: ", function (nombreJuego) {
-        rl.question("Ingrese el monto de la apuesta: $", function (montoApuestaStr) {
-            var montoApuesta = parseFloat(montoApuestaStr);
-            if (isNaN(montoApuesta) || montoApuesta <= 0) {
-                console.log("Monto de apuesta no válido. Intente nuevamente.");
-                seleccionarJuegoYRealizarApuesta();
-            }
-            else {
-                casino.seleccionarYJugar(nombreJuego, montoApuesta);
-                mostrarMenu();
-            }
-        });
+    casino.mostrarJuegosEnumerados(); // Mostrar juegos enumerados
+    rl.question("Seleccione el número del juego: ", function (indiceStr) {
+        var indice = parseInt(indiceStr);
+        if (isNaN(indice) || indice <= 0 || indice > casino.obtenerCantidadJuegos()) {
+            console.log("Número de juego no válido. Intente nuevamente.");
+            seleccionarJuegoYRealizarApuesta();
+        }
+        else {
+            rl.question("Ingrese el monto de la apuesta: $", function (montoApuestaStr) {
+                var montoApuesta = parseFloat(montoApuestaStr);
+                if (isNaN(montoApuesta) || montoApuesta <= 0) {
+                    console.log("Monto de apuesta no válido. Intente nuevamente.");
+                    seleccionarJuegoYRealizarApuesta();
+                }
+                else {
+                    casino.jugarJuegoPorIndice(indice, montoApuesta); // Nuevo método en Casino
+                    rl.question("¿Desea seguir jugando? (s/n): ", function (respuesta) {
+                        if (respuesta.toLowerCase() === "s") {
+                            mostrarMenu();
+                        }
+                        else {
+                            rl.close();
+                            console.log("¡Gracias por jugar! Hasta pronto.");
+                        }
+                    });
+                }
+            });
+        }
     });
 };
 // Iniciar el menú

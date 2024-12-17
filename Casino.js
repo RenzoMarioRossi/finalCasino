@@ -17,6 +17,24 @@ var Casino = /** @class */ (function () {
             console.log(juego.getInstrucciones());
         });
     };
+    Casino.prototype.mostrarJuegosEnumerados = function () {
+        console.log("\nJuegos disponibles:");
+        this.juegosDisponibles.forEach(function (juego, index) {
+            console.log("".concat(index + 1, ". ").concat(juego.getNombre()));
+        });
+    };
+    Casino.prototype.obtenerCantidadJuegos = function () {
+        return this.juegosDisponibles.length;
+    };
+    Casino.prototype.jugarJuegoPorIndice = function (indice, montoApuesta) {
+        var juego = this.juegosDisponibles[indice - 1]; // Ajustar índice (basado en 1)
+        if (juego) {
+            juego.jugar(montoApuesta);
+        }
+        else {
+            console.log("Juego no encontrado.");
+        }
+    };
     Casino.prototype.seleccionarYJugar = function (nombreJuego, montoApuesta) {
         var juego = this.juegosDisponibles.find(function (j) { return j.getNombre().toLowerCase() === nombreJuego.toLowerCase(); });
         if (juego) {

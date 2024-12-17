@@ -42,27 +42,25 @@ var Ruleta = /** @class */ (function (_super) {
                     var numeroApuesta = parseInt(numero, 10);
                     if (isNaN(numeroApuesta) || numeroApuesta < 0 || numeroApuesta > 36) {
                         console.log("Número inválido. Por favor, elige un número entre 0 y 36.");
-                        _this.rl.close();
+                        //this.solicitarContinuar();
                         return;
                     }
                     _this.ejecutarRuleta({ tipo: "numero", valor: numeroApuesta }, montoApuesta);
-                    _this.rl.close();
                 });
             }
             else if (tipo.toLowerCase() === "c") {
                 _this.rl.question("Elige un color (rojo/negro): ", function (color) {
                     if (color.toLowerCase() !== "rojo" && color.toLowerCase() !== "negro") {
                         console.log("Color inválido. Por favor, elige entre 'rojo' o 'negro'.");
-                        _this.rl.close();
+                        //this.solicitarContinuar();
                         return;
                     }
                     _this.ejecutarRuleta({ tipo: "color", valor: color.toLowerCase() }, montoApuesta);
-                    _this.rl.close();
                 });
             }
             else {
                 console.log("Opción inválida. Por favor, elige 'n' para número o 'c' para color.");
-                _this.rl.close();
+                //this.solicitarContinuar();
             }
         });
     };
@@ -80,16 +78,37 @@ var Ruleta = /** @class */ (function (_super) {
         else if (apuesta.tipo === "numero" && apuesta.valor === resultado) {
             console.log("¡Felicidades! Tu número coincide. Ganaste.");
             console.log("Ganaste $".concat(montoApuesta * 10, "!"));
+            this.rl.close;
         }
         else if (apuesta.tipo === "color" && apuesta.valor === color) {
             console.log("¡Felicidades! Tu color coincide. Ganaste.");
             console.log("Ganaste $".concat(montoApuesta * 2, "!"));
+            this.rl.close;
         }
         else {
             console.log("Lo sentimos, no ganaste esta vez. ¡Sigue intentando!");
+            this.rl.close;
         }
+        //this.solicitarContinuar
     };
-    // Método auxiliar para determinar el color basado en el número
+    /*
+    private solicitarContinuar(): void {
+        // para ver si quiere seguir jugando
+        this.rl.question("\n¿Quieres seguir jugando? (s para sí, n para no): ", (respuesta) => {
+            if (respuesta.toLowerCase() === "s") {
+                console.log("\nSelecciona otro juego o realiza otra apuesta.");
+                
+            } else if (respuesta.toLowerCase() === "n") {
+                console.log("Gracias por jugar. ¡Hasta pronto!");
+                this.rl.close(); // Cerrar si el jugador decide salir
+            } else {
+                console.log("Opción inválida. Por favor, responde 's' para sí o 'n' para no.");
+                this.solicitarContinuar();
+            }
+        });
+    }
+*/
+    // Método para determinar el color basado en el número
     Ruleta.prototype.determinarColor = function (numero) {
         // Definir los números rojos y negros
         var rojos = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];

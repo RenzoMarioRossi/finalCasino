@@ -13,12 +13,6 @@ var cargarInstrucciones = function () {
             instrucciones[nombreJuego.trim()] = textoInstrucciones.trim();
         }
     });
-    //console.log(instrucciones)
     return instrucciones;
 };
 exports.cargarInstrucciones = cargarInstrucciones;
-/*console.log(instrucciones)
-console.log(".")
-console.log(cargarInstrucciones)
-
-*/ 

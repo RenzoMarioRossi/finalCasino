@@ -49,7 +49,7 @@ const seleccionarJuegoYRealizarApuesta = () => {
     casino.mostrarJuegosEnumerados(); // Mostrar juegos enumerados
     rl.question("Seleccione el número del juego: ", (indiceStr) => {
         const indice = parseInt(indiceStr);
-        if (isNaN(indice) || indice < 1 || indice > casino.obtenerCantidadJuegos()) {
+        if (isNaN(indice) || indice <= 0 || indice > casino.obtenerCantidadJuegos()) {
             console.log("Número de juego no válido. Intente nuevamente.");
             seleccionarJuegoYRealizarApuesta();
         } else {
@@ -59,7 +59,7 @@ const seleccionarJuegoYRealizarApuesta = () => {
                     console.log("Monto de apuesta no válido. Intente nuevamente.");
                     seleccionarJuegoYRealizarApuesta();
                 } else {
-                    casino.jugarJuegoPorIndice(indice - 1, montoApuesta); // Nuevo método en Casino
+                    casino.jugarJuegoPorIndice(indice , montoApuesta); // Nuevo método en Casino
                     rl.question("¿Desea seguir jugando? (s/n): ", (respuesta) => {
                         if (respuesta.toLowerCase() === "s") {
                             mostrarMenu();
@@ -73,6 +73,7 @@ const seleccionarJuegoYRealizarApuesta = () => {
         }
     });
 };
+
 
 // Iniciar el menú
 mostrarMenu();
