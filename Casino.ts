@@ -1,9 +1,4 @@
 import { Juego } from "./Juego";
-import { BlackJack } from "./BlackJack";
-import { Ruleta } from "./Ruleta";
-import { TragaDiamantes } from "./TragaDiamantes";
-import { TragaFrutas } from "./TragaFrutas";
-
 import * as fs from "fs";
 import * as readline from "readline";
 
@@ -25,6 +20,26 @@ export class Casino {
             console.log(`- ${juego.getNombre()}`);
             console.log(juego.getInstrucciones());
         });
+    }
+
+    public mostrarJuegosEnumerados(): void {
+        console.log("\nJuegos disponibles:");
+        this.juegosDisponibles.forEach((juego, index) => {
+            console.log(`${index + 1}. ${juego.getNombre()}`);
+        });
+    }
+
+    public obtenerCantidadJuegos(): number {
+        return this.juegosDisponibles.length;
+    }
+
+    public jugarJuegoPorIndice(indice: number, montoApuesta: number): void {
+        const juego = this.juegosDisponibles[indice - 1]; // Ajustar índice (basado en 1)
+        if (juego) {
+            juego.jugar(montoApuesta);
+        } else {
+            console.log("Juego no encontrado.");
+        }
     }
 
     seleccionarYJugar(nombreJuego: string, montoApuesta: number): void {

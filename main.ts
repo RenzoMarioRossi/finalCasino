@@ -11,11 +11,11 @@ const rl = readline.createInterface({
 });
 
 // Crear el casino y pasar la instancia de readline
-const casino = new Casino(rl);
+const casino = new Casino(rl); // Apsar readline a Casino
 casino.agregarJuego(new TragaFrutas());
 casino.agregarJuego(new TragaDiamantes());
 casino.agregarJuego(new Ruleta(rl)); // Pasar readline a Ruleta
-casino.agregarJuego(new BlackJack(rl));
+casino.agregarJuego(new BlackJack(rl)); //pasar readline a BlackJack
 
 // Mostrar el menú principal
 const mostrarMenu = () => {
@@ -27,7 +27,7 @@ const mostrarMenu = () => {
         switch (opcion) {
             case "1":
                 casino.mostrarJuegosDisponibles();
-                mostrarMenu(); // Volver al menú principal
+                mostrarMenu(); 
                 break;
             case "2":
                 seleccionarJuegoYRealizarApuesta();
@@ -44,19 +44,33 @@ const mostrarMenu = () => {
     });
 };
 
-// Función para seleccionar juego y realizar apuesta
+// Función para seleccionar juego (por indice enumerado) y realizar apuesta
 const seleccionarJuegoYRealizarApuesta = () => {
-    rl.question("Ingrese el nombre del juego: ", (nombreJuego) => {
-        rl.question("Ingrese el monto de la apuesta: $", (montoApuestaStr) => {
-            const montoApuesta = parseFloat(montoApuestaStr);
-            if (isNaN(montoApuesta) || montoApuesta <= 0) {
-                console.log("Monto de apuesta no válido. Intente nuevamente.");
-                seleccionarJuegoYRealizarApuesta();
-            } else {
-                casino.seleccionarYJugar(nombreJuego, montoApuesta);
-                mostrarMenu(); // Volver al menú principal
-            }
-        });
+    casino.mostrarJuegosEnumerados(); // Mostrar juegos enumerados
+    rl.question("Seleccione el número del juego: ", (indiceStr) => {
+        const indice = parseInt(indiceStr);
+        if (isNaN(indice) || indice < 1 || indice > casino.obtenerCantidadJuegos()) {
+            console.log("Número de juego no válido. Intente nuevamente.");
+            seleccionarJuegoYRealizarApuesta();
+        } else {
+            rl.question("Ingrese el monto de la apuesta: $", (montoApuestaStr) => {
+                const montoApuesta = parseFloat(montoApuestaStr);
+                if (isNaN(montoApuesta) || montoApuesta <= 0) {
+                    console.log("Monto de apuesta no válido. Intente nuevamente.");
+                    seleccionarJuegoYRealizarApuesta();
+                } else {
+                    casino.jugarJuegoPorIndice(indice - 1, montoApuesta); // Nuevo método en Casino
+                    rl.question("¿Desea seguir jugando? (s/n): ", (respuesta) => {
+                        if (respuesta.toLowerCase() === "s") {
+                            mostrarMenu();
+                        } else {
+                            rl.close();
+                            console.log("¡Gracias por jugar! Hasta pronto.");
+                        }
+                    });
+                }
+            });
+        }
     });
 };
 

@@ -15,7 +15,7 @@ var casino = new Casino_1.Casino(rl);
 casino.agregarJuego(new TragaFrutas_1.TragaFrutas());
 casino.agregarJuego(new TragaDiamantes_1.TragaDiamantes());
 casino.agregarJuego(new Ruleta_1.Ruleta(rl)); // Pasar readline a Ruleta
-casino.agregarJuego(new BlackJack_1.BlackJack(rl));
+casino.agregarJuego(new BlackJack_1.BlackJack(rl)); //pasar readline a BlackJack
 // Mostrar el menú principal
 var mostrarMenu = function () {
     console.log("\nBienvenido al Casino!");
@@ -26,7 +26,7 @@ var mostrarMenu = function () {
         switch (opcion) {
             case "1":
                 casino.mostrarJuegosDisponibles();
-                mostrarMenu(); // Volver al menú principal
+                mostrarMenu();
                 break;
             case "2":
                 seleccionarJuegoYRealizarApuesta();
@@ -53,7 +53,7 @@ var seleccionarJuegoYRealizarApuesta = function () {
             }
             else {
                 casino.seleccionarYJugar(nombreJuego, montoApuesta);
-                mostrarMenu(); // Volver al menú principal
+                mostrarMenu();
             }
         });
     });

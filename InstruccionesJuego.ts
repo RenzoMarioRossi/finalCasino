@@ -16,12 +16,7 @@ export const cargarInstrucciones = (): Record<string, string> => {
         }
     });
 
-    console.log(instrucciones)
 
     return instrucciones;
 };
-
-//console.log(instrucciones)
-console.log(".")
-console.log(cargarInstrucciones)
 

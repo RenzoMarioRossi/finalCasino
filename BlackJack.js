@@ -124,6 +124,7 @@ var BlackJack = /** @class */ (function (_super) {
             _a = [mazo[j], mazo[i]], mazo[i] = _a[0], mazo[j] = _a[1];
         }
     };
+    // Resolucion de problema de doble puntaje de las ases
     BlackJack.prototype.calcularPuntaje = function (mano) {
         var puntaje = 0;
         var ases = 0;

@@ -125,6 +125,7 @@ export class BlackJack extends Juego {
         }
     }
 
+    // Resolucion de problema de doble puntaje de las ases
     private calcularPuntaje(mano: Carta[]): number {
         let puntaje = 0;
         let ases = 0;
