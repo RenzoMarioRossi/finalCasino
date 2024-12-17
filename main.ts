@@ -74,7 +74,7 @@ const casino = new Casino(rl); // Apsar readline a Casino
 casino.agregarJuego(new TragaFrutas());
 casino.agregarJuego(new TragaDiamantes());
 casino.agregarJuego(new Ruleta(rl, mostrarMenu)); // Pasar readline a Ruleta
-casino.agregarJuego(new BlackJack(rl)); //pasar readline a BlackJack
+casino.agregarJuego(new BlackJack(rl, mostrarMenu)); //pasar readline a BlackJack
 
 // Iniciar el menú
 mostrarMenu();

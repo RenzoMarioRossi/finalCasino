@@ -10,7 +10,7 @@ export class Ruleta extends Juego {
         const instrucciones = cargarInstrucciones()["Ruleta"];
         super("Ruleta", 50, instrucciones);
         this.rl = rl;
-        this.mostrarMenuCallback = mostrarMenu; // Asignamos la función mostrarMenu
+        this.mostrarMenuCallback = mostrarMenu; // El mostrarMenu de main ya configurado
     }
 
     jugar(montoApuesta: number): void {

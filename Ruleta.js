@@ -25,7 +25,7 @@ var Ruleta = /** @class */ (function (_super) {
         var instrucciones = (0, InstruccionesJuego_1.cargarInstrucciones)()["Ruleta"];
         _this = _super.call(this, "Ruleta", 50, instrucciones) || this;
         _this.rl = rl;
-        _this.mostrarMenuCallback = mostrarMenu; // Asignamos la función mostrarMenu
+        _this.mostrarMenuCallback = mostrarMenu; // El mostrarMenu de main ya configurado
         return _this;
     }
     Ruleta.prototype.jugar = function (montoApuesta) {

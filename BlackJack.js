@@ -20,11 +20,12 @@ var Juego_1 = require("./Juego");
 var InstruccionesJuego_1 = require("./InstruccionesJuego");
 var BlackJack = /** @class */ (function (_super) {
     __extends(BlackJack, _super);
-    function BlackJack(rl) {
+    function BlackJack(rl, mostrarMenu) {
         var _this = this;
         var instrucciones = (0, InstruccionesJuego_1.cargarInstrucciones)()["BlackJack"];
         _this = _super.call(this, "BlackJack", 100, instrucciones) || this;
         _this.rl = rl;
+        _this.mostrarMenuCallback = mostrarMenu; // El mostrarMenu de main ya configurado
         return _this;
     }
     BlackJack.prototype.jugar = function (montoApuesta) {
@@ -51,6 +52,7 @@ var BlackJack = /** @class */ (function (_super) {
         console.log("Tu puntaje actual: ".concat(puntajeJugador));
         if (puntajeJugador > 21) {
             console.log("¡Te pasaste de 21! Has perdido.");
+            this.solicitarContinuar();
             return;
         }
         this.rl.question("¿Quieres pedir una carta (p) o plantarte (x)? ", function (opcion) {
@@ -82,13 +84,17 @@ var BlackJack = /** @class */ (function (_super) {
         console.log("Puntaje del crupier: ".concat(puntajeCrupier));
         if (puntajeCrupier > 21 || puntajeJugador > puntajeCrupier) {
             console.log("\u00A1Ganaste! Has ganado $".concat(montoApuesta * 2, "."));
+            this.solicitarContinuar();
         }
         else if (puntajeJugador === puntajeCrupier) {
             console.log("Empate. Recuperas tu apuesta.");
+            this.solicitarContinuar();
         }
         else {
             console.log("El crupier gana. Has perdido.");
+            this.solicitarContinuar();
         }
+        this.solicitarContinuar();
     };
     BlackJack.prototype.crearMazo = function () {
         var valores = [
@@ -145,6 +151,24 @@ var BlackJack = /** @class */ (function (_super) {
     };
     BlackJack.prototype.mostrarMano = function (mano) {
         return mano.map(this.mostrarCarta).join(", ");
+    };
+    BlackJack.prototype.solicitarContinuar = function () {
+        var _this = this;
+        // para ver si quiere seguir jugando
+        this.rl.question("\n¿Quieres seguir jugando? (s para sí, n para no): ", function (respuesta) {
+            if (respuesta.toLowerCase() === "s") {
+                console.log("\nSelecciona otro juego o realiza otra apuesta.");
+                _this.mostrarMenuCallback(); // Llamamos a mostrarMenu para regresar al menú principal
+            }
+            else if (respuesta.toLowerCase() === "n") {
+                console.log("Gracias por jugar. ¡Hasta pronto!");
+                _this.rl.close(); // Cerrar si el jugador decide salir
+            }
+            else {
+                console.log("Opción inválida. Por favor, responde 's' para sí o 'n' para no.");
+                _this.solicitarContinuar();
+            }
+        });
     };
     return BlackJack;
 }(Juego_1.Juego));

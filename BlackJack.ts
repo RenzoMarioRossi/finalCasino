@@ -9,11 +9,14 @@ interface Carta {
 
 export class BlackJack extends Juego {
     private rl: readline.Interface;
+    private mostrarMenuCallback: Function; // Variable para almacenar la función mostrarMenu
 
-    constructor(rl: readline.Interface) {
+    constructor(rl: readline.Interface, mostrarMenu: Function) {
         const instrucciones = cargarInstrucciones()["BlackJack"];
         super("BlackJack", 100, instrucciones);
         this.rl = rl;
+        this.mostrarMenuCallback = mostrarMenu; // El mostrarMenu de main ya configurado
+
     }
 
     jugar(montoApuesta: number): void {
@@ -47,6 +50,7 @@ export class BlackJack extends Juego {
         
         if (puntajeJugador > 21) {
             console.log("¡Te pasaste de 21! Has perdido.");
+            this.solicitarContinuar()
             return;
         }
 
@@ -82,11 +86,16 @@ export class BlackJack extends Juego {
 
         if (puntajeCrupier > 21 || puntajeJugador > puntajeCrupier) {
             console.log(`¡Ganaste! Has ganado $${montoApuesta * 2}.`);
+            this.solicitarContinuar()
         } else if (puntajeJugador === puntajeCrupier) {
             console.log("Empate. Recuperas tu apuesta.");
+            this.solicitarContinuar()
         } else {
             console.log("El crupier gana. Has perdido.");
+            this.solicitarContinuar()
         }
+
+        this.solicitarContinuar()
     }
 
     private crearMazo(): Carta[] {
@@ -149,5 +158,22 @@ export class BlackJack extends Juego {
 
     private mostrarMano(mano: Carta[]): string {
         return mano.map(this.mostrarCarta).join(", ");
+    }
+
+
+    private solicitarContinuar(): void {
+        // para ver si quiere seguir jugando
+        this.rl.question("\n¿Quieres seguir jugando? (s para sí, n para no): ", (respuesta) => {
+            if (respuesta.toLowerCase() === "s") {
+                console.log("\nSelecciona otro juego o realiza otra apuesta.");
+                this.mostrarMenuCallback(); // Llamamos a mostrarMenu para regresar al menú principal
+            } else if (respuesta.toLowerCase() === "n") {
+                console.log("Gracias por jugar. ¡Hasta pronto!");
+                this.rl.close(); // Cerrar si el jugador decide salir
+            } else {
+                console.log("Opción inválida. Por favor, responde 's' para sí o 'n' para no.");
+                this.solicitarContinuar();
+            }
+        });
     }
 }
